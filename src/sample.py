@@ -51,12 +51,13 @@ if __name__ == '__main__':
     stride = 0.08
     idx = 0
     while not rospy.is_shutdown():
-        c = math.cos(counter)
-        s = 0.2
+        c_x = math.cos(counter)
+        c_y = math.sin(counter)
+        s = 0.1
         num_ee = relaxedIK.vars.robot.numChains
         goal_pos = []
         goal_quat = []
-        goal_pos.append([0,s*c,0])
+        goal_pos.append([s*c_x + 0.327, s*c_y, 0])
         for i in range(num_ee):
             goal_quat.append([1,0,0,0])
             if i == 0:
