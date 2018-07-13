@@ -25,8 +25,8 @@ class RelaxedIK_vars(Vars):
                  objective_function=objective_master_relaxedIK,
                  full_arms=[],
                  init_state=6*[0],
-                 rotation_mode = 'relative',  # could be 'absolute' or 'relative'
-                 position_mode = 'relative',
+                 rotation_mode = 'absolute', #'relative',  # could be 'absolute' or 'relative'
+                 position_mode = 'absolute', #'relative',
                  objectives=(Position_MultiEE_Obj(), Orientation_MultiEE_Obj(), Min_Jt_Vel_Obj(),Min_Jt_Accel_Obj(),Min_Jt_Jerk_Obj(), Joint_Limit_Obj(), Collision_Avoidance_nn()),
                  weight_funcs=(Identity_Weight(), Identity_Weight(), Identity_Weight(),Identity_Weight(),Identity_Weight(), Identity_Weight(), Identity_Weight()),
                  weight_priors=(50.0,40.0,0.3,0.3,0.3,1.0,2.0),
