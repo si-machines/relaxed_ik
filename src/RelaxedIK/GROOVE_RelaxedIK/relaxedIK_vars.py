@@ -206,11 +206,31 @@ class RelaxedIK_vars(Vars):
         self.total_run_time = rospy.get_time() - self.start_time
         self.avg_solution_time = self.total_run_time / self.solveID
 
+    def reset(self, reset_state):
+        self.init_ee_positions = self.robot.get_ee_positions(reset_state)
+        self.init_ee_quats = self.robot.get_ee_rotations(reset_state)
+        self.ee_positions = self.init_ee_positions
+        self.prev_ee_positions3 = self.init_ee_positions
+        self.prev_ee_positions2 = self.init_ee_positions
+        self.prev_ee_positions = self.init_ee_positions
 
+        if self.position_mode == 'absolute':
+            self.goal_positions = self.init_ee_positions
+        else:
+            self.goal_positions = []
+            for i in range(self.num_chains):
+                self.goal_positions.append([0,0,0])
+        self.prev_goal_positions3 = self.goal_positions
+        self.prev_goal_positions2 = self.goal_positions
+        self.prev_goal_positions = self.goal_positions
 
-
-
-
-
-
+        if self.rotation_mode == 'absolute':
+            self.goal_quats = self.init_ee_quats
+        else:
+            self.goal_quats = []
+            for i in range(self.num_chains):
+                self.goal_quats.append([1,0,0,0])
+        self.prev_goal_quats3 = self.goal_quats
+        self.prev_goal_quats2 = self.goal_quats
+        self.prev_goal_quats = self.goal_quats
 

@@ -104,23 +104,5 @@ class RelaxedIK(object):
 
 
     def reset(self, reset_state):
-        self.vars.xopt = reset_state
-        self.vars.prev_state = reset_state
-        self.vars.prev_state2 = reset_state
-        self.vars.prev_state3 = reset_state
+        self.vars.reset(reset_state)
 
-        self.vars.init_ee_pos = self.vars.arm.getFrames(reset_state)[0][-1]
-        self.vars.init_ee_quat = T.quaternion_from_matrix(self.vars.arm.getFrames(reset_state)[1][-1])
-        self.vars.ee_pos = self.vars.init_ee_pos
-        self.vars.prev_ee_pos3 = self.vars.init_ee_pos
-        self.vars.prev_ee_pos2 = self.vars.init_ee_pos
-        self.vars.prev_ee_pos = self.vars.init_ee_pos
-
-        self.vars.goal_pos = [0, 0, 0]
-        self.vars.prev_goal_pos3 = self.vars.goal_pos
-        self.vars.prev_goal_pos2 = self.vars.goal_pos
-        self.vars.prev_goal_pos = self.vars.goal_pos
-        self.vars.goal_quat = [1, 0, 0, 0]
-        self.vars.prev_goal_quat3 = self.vars.goal_quat
-        self.vars.prev_goal_quat2 = self.vars.goal_quat
-        self.vars.prev_goal_quat = self.vars.goal_quat
