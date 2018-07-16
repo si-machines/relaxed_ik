@@ -152,27 +152,35 @@ class RelaxedIK_vars(Vars):
 
         Vars.__init__(self,name, objective_function, self.init_state,objectives,weight_funcs,weight_priors,constraints=self.constraints,bounds=self.bounds)
 
-        self.goal_positions = []
-        for i in range(self.num_chains):
-            self.goal_positions.append(np.array([0,0,0]))
-        self.prev_goal_positions3 = self.goal_positions
-        self.prev_goal_positions2 = self.goal_positions
-        self.prev_goal_positions = self.goal_positions
-        self.goal_quats = []
-        for i in range(self.num_chains):
-            self.goal_quats.append([1,0,0,0])
-        self.prev_goal_quats3 = self.goal_quats
-        self.prev_goal_quats2 = self.goal_quats
-        self.prev_goal_quats = self.goal_quats
-        self.frames = self.robot.getFrames(self.init_state)
-        self.joint_limit_obj_value = 0.0
-
         self.init_ee_positions = self.robot.get_ee_positions(self.init_state)
         self.init_ee_quats = self.robot.get_ee_rotations(self.init_state)
         self.ee_positions = self.init_ee_positions
         self.prev_ee_positions3 = self.init_ee_positions
         self.prev_ee_positions2 = self.init_ee_positions
         self.prev_ee_positions = self.init_ee_positions
+
+        if self.position_mode == 'absolute':
+            self.goal_positions = self.init_ee_positions
+        else:
+            self.goal_positions = []
+            for i in range(self.num_chains):
+                self.goal_positions.append(np.array([0,0,0]))
+        self.prev_goal_positions3 = self.goal_positions
+        self.prev_goal_positions2 = self.goal_positions
+        self.prev_goal_positions = self.goal_positions
+
+        if self.rotation_mode == 'absolute':
+            self.goal_quats = self.init_ee_quats
+        else:
+            self.goal_quats = []
+            for i in range(self.num_chains):
+                self.goal_quats.append([1,0,0,0])
+        self.prev_goal_quats3 = self.goal_quats
+        self.prev_goal_quats2 = self.goal_quats
+        self.prev_goal_quats = self.goal_quats
+        self.frames = self.robot.getFrames(self.init_state)
+        self.joint_limit_obj_value = 0.0
+
         self.first = True
         self.unconstrained = False
         self.marker_pub = rospy.Publisher('visualization_marker',Marker,queue_size=5)
